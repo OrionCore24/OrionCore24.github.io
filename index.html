@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name – Portfolio</title>
+<meta name="description" content="Portfolio of Your Name, web developer and designer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // Apply saved theme before paint to avoid a flash
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<style>
+  :root {
+    --bg: #f2f5fa;
+    --surface: #e6ecf6;
+    --ink: #121c33;
+    --muted: #55617d;
+    --line: #cdd6e6;
+    --accent: #2a52e8;
+    --accent-ink: #ffffff;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1526;
+    --surface: #152038;
+    --ink: #e8edf8;
+    --muted: #9aa8c6;
+    --line: #253252;
+    --accent: #8aa9ff;
+    --accent-ink: #0d1526;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 1.0625rem/1.65 var(--body);
+    transition: background .35s, color .35s;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font: 800 1.2rem var(--display); text-decoration: none; }
+  nav { display: flex; align-items: center; gap: 1.4rem; }
+  nav a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
+  nav a:hover { color: var(--ink); }
+  .toggle {
+    width: 54px; height: 30px; border-radius: 99px; border: 1px solid var(--line);
+    background: var(--surface); cursor: pointer; position: relative; padding: 0;
+  }
+  .toggle::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); transition: transform .3s cubic-bezier(.5,1.6,.5,1);
+  }
+  :root[data-theme="dark"] .toggle::after { transform: translateX(24px); }
+  .toggle span { position: absolute; top: 50%; transform: translateY(-50%); font-size: 13px; line-height: 1; }
+  .toggle .sun { left: 8px; } .toggle .moon { right: 8px; }
+
+  /* Hero */
+  .hero { padding: clamp(4rem, 12vw, 9rem) 0 clamp(3rem, 8vw, 6rem); }
+  .hero p.hi { color: var(--muted); margin-bottom: 1rem; }
+  h1 { font: 800 clamp(3rem, 11vw, 7.5rem)/.95 var(--display); letter-spacing: -.035em; }
+  h1 .role { display: block; color: var(--accent); }
+  .lead { max-width: 34em; margin-top: 2rem; font-size: 1.2rem; color: var(--muted); }
+  .cta { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 2.2rem; }
+  .btn { display: inline-block; padding: .75rem 1.4rem; border-radius: 10px; text-decoration: none; font-weight: 500; border: 1px solid var(--line); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .btn:hover { transform: translateY(-1px); }
+
+  /* Sections */
+  section { padding: 4rem 0; border-top: 1px solid var(--line); }
+  h2 { font: 800 clamp(1.8rem, 4vw, 2.5rem)/1.1 var(--display); letter-spacing: -.02em; margin-bottom: 2rem; }
+  .about { display: grid; gap: 2rem; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .about { grid-template-columns: 2fr 1fr; } }
+  .about p + p { margin-top: 1rem; }
+  .facts { background: var(--surface); border-radius: 14px; padding: 1.4rem; align-self: start; }
+  .facts dt { font-weight: 500; font-size: .9rem; color: var(--muted); }
+  .facts dd { margin: 0 0 .9rem; }
+  .facts dd:last-child { margin: 0; }
+
+  /* Projects */
+  .project { display: grid; gap: .5rem 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+  .project:first-of-type { border-top: 1px solid var(--line); }
+  @media (min-width: 760px) { .project { grid-template-columns: 1fr 1.4fr; } }
+  .project h3 { font: 800 1.5rem/1.2 var(--display); }
+  .project:hover h3 { color: var(--accent); }
+  .project p { color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .6rem; list-style: none; padding: 0; }
+  .tags li { background: var(--surface); border-radius: 99px; padding: .15rem .75rem; font-size: .85rem; }
+
+  /* Skills + contact */
+  .skills { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; padding: 0; }
+  .skills li { border: 1px solid var(--line); border-radius: 10px; padding: .45rem 1rem; }
+  .contact a.mail { font: 800 clamp(1.5rem, 5vw, 2.8rem)/1.2 var(--display); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; word-break: break-word; }
+  .links { display: flex; gap: 1.4rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .9rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero .wrap > * { animation: rise .7s both; }
+    .hero .wrap > *:nth-child(2) { animation-delay: .08s; }
+    .hero .wrap > *:nth-child(3) { animation-delay: .16s; }
+    .hero .wrap > *:nth-child(4) { animation-delay: .24s; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  @media (max-width: 560px) { nav a { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#top">YN.</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="toggle" id="themeToggle" aria-label="Switch between light and dark mode" title="Switch theme">
+        <span class="sun" aria-hidden="true">☀</span><span class="moon" aria-hidden="true">☾</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <p class="hi">Hi, I'm Your Name.</p>
+      <h1>I build things <span class="role">for the web.</span></h1>
+      <p class="lead">I'm a web developer who designs and ships fast, accessible websites and apps. Currently open to freelance projects and full-time roles.</p>
+      <div class="cta">
+        <a class="btn primary" href="#work">See my work</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <h2>About me</h2>
+      <div class="about">
+        <div>
+          <p>Write two or three sentences about who you are and what you care about. Mention what you studied, where you've worked, or what got you into building things.</p>
+          <p>Then say what kind of work you want next. Keep it short and specific, so a visitor knows within ten seconds if you're the right person.</p>
+        </div>
+        <dl class="facts">
+          <dt>Based in</dt><dd>Your city, Country</dd>
+          <dt>Focus</dt><dd>Front-end, UI design</dd>
+          <dt>Availability</dt><dd>Open to work</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>Selected work</h2>
+      <a class="project" href="https://github.com/yourusername/project-one">
+        <div><h3>Project One</h3></div>
+        <div>
+          <p>One sentence on the problem it solves and what you did. Mention a result if you have one.</p>
+          <ul class="tags"><li>JavaScript</li><li>React</li><li>CSS</li></ul>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/yourusername/project-two">
+        <div><h3>Project Two</h3></div>
+        <div>
+          <p>Describe what it is, who it's for, and your role in building it.</p>
+          <ul class="tags"><li>Python</li><li>Flask</li><li>SQL</li></ul>
+        </div>
+      </a>
+      <a class="project" href="https://github.com/yourusername/project-three">
+        <div><h3>Project Three</h3></div>
+        <div>
+          <p>A short description. Link each project to its live demo or its GitHub repository.</p>
+          <ul class="tags"><li>HTML</li><li>Accessibility</li></ul>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <ul class="skills">
+        <li>HTML &amp; CSS</li><li>JavaScript</li><li>React</li><li>Node.js</li><li>Git &amp; GitHub</li><li>Figma</li><li>Responsive design</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Let's work together</h2>
+      <a class="mail" href="mailto:you@example.com">you@example.com</a>
+      <div class="links">
+        <a href="https://github.com/yourusername">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername">LinkedIn</a>
+        <a href="https://x.com/yourusername">X</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year">2026</span> Your Name. Built with HTML, CSS and a little JavaScript.</div>
+</footer>
+
+<script>
+  var root = document.documentElement;
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+</script>
+</body>
+</html>
